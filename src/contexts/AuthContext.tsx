@@ -35,7 +35,7 @@ export const useAuth = () => {
 };
 
 // Configure axios defaults
-axios.defaults.baseURL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+axios.defaults.baseURL = import.meta.env.VITE_BACKEND_URL || 'http://localhost:5000';
 axios.defaults.withCredentials = true;
 
 interface AuthProviderProps {
