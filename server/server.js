@@ -18,7 +18,7 @@ app.use(
     origin: [
       "https://socialmediamanagement3.netlify.app",
       "https://localhost:5173",
-      "https://social-media-management-q7vq.vercel.app",
+      "https://social-media-management-q7vq.vercel.app"
     ],
     credentials: true,
   })
@@ -51,12 +51,6 @@ app.get("/api/health", (req, res) => {
     message: "Server is running",
     timestamp: new Date().toISOString(),
   });
-});
-res.cookie("token", token, {
-  httpOnly: true,
-  secure: true, // only over HTTPS
-  sameSite: "none", // required for cross-site
-  maxAge: 7 * 24 * 60 * 60 * 1000,
 });
 
 // Error handling middleware
