@@ -27,20 +27,20 @@ const packages = {
 // Create order
 router.post("/create-order", auth, async (req, res) => {
   try {
-    const { planType } = req.body;
+    const { planType,userId } = req.body;
 
     if (!packages[planType]) {
       return res.status(400).json({ message: "Invalid plan type" });
     }
 
     const receipt = `order_${req.user._id.toString().slice(-6)}_${Date.now().toString().slice(-5)}`;
-
+         
     const options = {
       amount: packages[planType].price,
       currency: "INR",
       receipt,
       notes: {
-        userId: req.user._id.toString(),
+        userId: userId.toString(),
         planType,
         planName: packages[planType].name,
       },
