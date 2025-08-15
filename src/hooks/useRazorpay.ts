@@ -39,11 +39,11 @@ export const useRazorpay = () => {
         alert("Failed to load payment gateway. Please try again.");
         return false;
       }
-
+      console.log("userid", (window as any).currentUser?._id);
       // Create order
       const orderResponse = await axios.post("/api/payments/create-order", {
         planType,
-        userId: (window as any).currentUser?._id || null,
+        user: (window as any).currentUser || null,
       });
 
       const { orderId, amount, currency } = orderResponse.data;

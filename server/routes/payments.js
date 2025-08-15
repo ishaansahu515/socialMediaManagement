@@ -1,12 +1,12 @@
-import express from 'express';
-import Razorpay from 'razorpay';
-import crypto from 'crypto';
-import User from '../models/User.js';
-import auth from '../middleware/auth.js';
+import express from "express";
+import Razorpay from "razorpay";
+import crypto from "crypto";
+import User from "../models/User.js";
+import auth from "../middleware/auth.js";
 
 const router = express.Router();
 
-import dotenv from 'dotenv';
+import dotenv from "dotenv";
 dotenv.config();
 if (!process.env.RAZORPAY_KEY_ID || !process.env.RAZORPAY_KEY_SECRET) {
   throw new Error("Razorpay credentials are missing in .env file");
@@ -27,14 +27,17 @@ const packages = {
 // Create order
 router.post("/create-order", auth, async (req, res) => {
   try {
-    const { planType,userId } = req.body;
-
+    const { planType } = req.body;
+    const userId = req.body.user._id;
+    console.log("User:", req.body.user);
     if (!packages[planType]) {
       return res.status(400).json({ message: "Invalid plan type" });
     }
 
-    const receipt = `order_${req.user._id.toString().slice(-6)}_${Date.now().toString().slice(-5)}`;
-         
+    const receipt = `order_${req.user._id.toString().slice(-6)}_${Date.now()
+      .toString()
+      .slice(-5)}`;
+
     const options = {
       amount: packages[planType].price,
       currency: "INR",
@@ -45,7 +48,6 @@ router.post("/create-order", auth, async (req, res) => {
         planName: packages[planType].name,
       },
     };
-
 
     const order = await razorpay.orders.create(options);
 
@@ -61,7 +63,6 @@ router.post("/create-order", auth, async (req, res) => {
     res.status(500).json({ message: "Failed to create order" });
   }
 });
-
 
 // Verify payment
 router.post("/verify-payment", auth, async (req, res) => {
