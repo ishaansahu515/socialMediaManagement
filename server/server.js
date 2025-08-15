@@ -18,6 +18,7 @@ app.use(
     origin: [
       "https://socialmediamanagement3.netlify.app",
       "http://localhost:5173",
+      "https://social-media-management-q7vq.vercel.app"
     ],
     credentials: true,
   })
