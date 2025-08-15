@@ -37,6 +37,13 @@ app.use("/api/auth", authRoutes);
 app.use("/api/payments", paymentRoutes);
 app.use("/api/contact", contactRoutes);
 
+app.get("/", (req, res) => {
+  res.status(200).json({
+    message: "Welcome to API",
+    version: "1.0.0",
+    documentation: "/api/docs",
+  });
+});
 // Health check
 app.get("/api/health", (req, res) => {
   res.json({
