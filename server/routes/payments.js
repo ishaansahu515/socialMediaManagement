@@ -25,16 +25,19 @@ const packages = {
 };
 
 // Create order
-router.post("/create-order",  async (req, res) => {
+router.post("/create-order", async (req, res) => {
   try {
-    const { planType, userId } = req.body;
-   
-    console.log("UserId:", userId);
+    const { planType, user } = req.body;
+    const Id = user?.id || user?._id;
+
+    if (!Id) {
+      return res.status(400).json({ message: "User ID not provided" });
+    }
     if (!packages[planType]) {
       return res.status(400).json({ message: "Invalid plan type" });
     }
 
-    const receipt = `order_${req.user._id.toString().slice(-6)}_${Date.now()
+    const receipt = `order_${Id.toString().slice(-6)}_${Date.now()
       .toString()
       .slice(-5)}`;
 
@@ -43,7 +46,7 @@ router.post("/create-order",  async (req, res) => {
       currency: "INR",
       receipt,
       notes: {
-        userId: userId.toString(),
+        userId: Id.toString(),
         planType,
         planName: packages[planType].name,
       },

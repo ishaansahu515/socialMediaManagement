@@ -39,17 +39,11 @@ export const useRazorpay = () => {
         alert("Failed to load payment gateway. Please try again.");
         return false;
       }
-      const user=localStorage.getItem("social-user");
-      const parsedUser = user ? JSON.parse(user) : null;
-      const userID = parsedUser?._id || "";
-      if (!userID) {
-        alert("User not found. Please log in again.");
-        return false;
-      }
-      // Create order
+      const storedUser = localStorage.getItem("social-user");
+      const user = storedUser ? JSON.parse(storedUser) : null;
       const orderResponse = await axios.post("/api/payments/create-order", {
         planType,
-        userId: userID || null,
+         user: { id: user._id || user.id },
       });
 
       const { orderId, amount, currency } = orderResponse.data;

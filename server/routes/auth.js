@@ -45,7 +45,6 @@ router.post("/register", async (req, res) => {
 
     // Generate token
     const token = generateToken(user._id);
-    localStorage.setItem("social-user", JSON.stringify(user));
     // Set HTTP-only cookie
     res.cookie("token", token, {
       httpOnly: true,
@@ -97,7 +96,6 @@ router.post("/login", async (req, res) => {
     // Generate token
     const token = generateToken(user._id);
 
-    localStorage.setItem("social-user", JSON.stringify(user));
     // Set HTTP-only cookie
     res.cookie("token", token, {
       httpOnly: true,
@@ -129,21 +127,14 @@ router.post("/logout", (req, res) => {
 });
 
 // Get current user
-router.get("/me", auth, async (req, res) => {
-  try {
-    res.json({
-      user: {
-        id: req.user._id,
-        firstName: req.user.firstName,
-        lastName: req.user.lastName,
-        email: req.user.email,
-        subscription: req.user.subscription,
-      },
-    });
-  } catch (error) {
-    console.error("Get user error:", error);
-    res.status(500).json({ message: "Server error" });
-  }
-});
+// router.get("/me", auth, async (req, res) => {
+//   try {
+//     // If auth middleware passed, user is authenticated
+//     res.json({ message: "Authenticated" });
+//   } catch (error) {
+//     console.error("Get user error:", error);
+//     res.status(500).json({ message: "Server error" });
+//   }
+// });
 
 export default router;

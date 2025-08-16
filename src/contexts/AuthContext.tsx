@@ -21,16 +21,13 @@ interface AuthContextType {
   logout: () => Promise<void>;
   isAuthenticated: boolean;
   loading: boolean;
-  checkAuth: () => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const useAuth = () => {
   const context = useContext(AuthContext);
-  if (context === undefined) {
-    throw new Error('useAuth must be used within an AuthProvider');
-  }
+  if (!context) throw new Error('useAuth must be used within an AuthProvider');
   return context;
 };
 
@@ -43,28 +40,22 @@ interface AuthProviderProps {
 }
 
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
-  const [user, setUser] = useState<User | null>(null);
+  const [user, setUser] = useState<User | null>(() => {
+    // Read user from localStorage on initial load
+    const storedUser = localStorage.getItem('social-user');
+    return storedUser ? JSON.parse(storedUser) : null;
+  });
   const [loading, setLoading] = useState(true);
 
-  const checkAuth = async () => {
-    try {
-      const response = await axios.get('/api/auth/me');
-      setUser(response.data.user);
-    } catch (error) {
-      setUser(null);
-    } finally {
-      setLoading(false);
-    }
-  };
-
   useEffect(() => {
-    checkAuth();
+    setLoading(false);
   }, []);
 
   const login = async (email: string, password: string): Promise<boolean> => {
     try {
       const response = await axios.post('/api/auth/login', { email, password });
       setUser(response.data.user);
+      localStorage.setItem('social-user', JSON.stringify(response.data.user));
       return true;
     } catch (error: any) {
       console.error('Login error:', error.response?.data?.message || error.message);
@@ -81,6 +72,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         lastName
       });
       setUser(response.data.user);
+      localStorage.setItem('social-user', JSON.stringify(response.data.user));
       return true;
     } catch (error: any) {
       console.error('Signup error:', error.response?.data?.message || error.message);
@@ -91,11 +83,11 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const logout = async () => {
     try {
       await axios.post('/api/auth/logout');
-      setUser(null);
     } catch (error) {
       console.error('Logout error:', error);
-      // Clear user even if logout request fails
+    } finally {
       setUser(null);
+      localStorage.removeItem('social-user');
     }
   };
 
@@ -107,8 +99,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         signup,
         logout,
         isAuthenticated: !!user,
-        loading,
-        checkAuth,
+        loading
       }}
     >
       {children}
