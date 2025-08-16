@@ -1,46 +1,53 @@
-import React, { useState } from 'react';
-import { Phone, Mail, Clock, Send } from 'lucide-react';
-import axios from 'axios';
+import React, { useState } from "react";
+import { Phone, Mail, Clock, Send } from "lucide-react";
+import axios from "axios";
 
 const Contact: React.FC = () => {
   const [formData, setFormData] = useState({
-    firstName: '',
-    lastName: '',
-    email: '',
-    phone: '',
-    package: 'Growth - ₹19,999/month',
-    message: ''
+    firstName: "",
+    lastName: "",
+    email: "",
+    phone: "",
+    package: "Growth - ₹19,999/month",
+    message: "",
   });
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
-    setFormData(prev => ({
+  const handleChange = (
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
+    >
+  ) => {
+    setFormData((prev) => ({
       ...prev,
-      [e.target.name]: e.target.value
+      [e.target.name]: e.target.value,
     }));
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
-    
+
     try {
-      await axios.post('/api/contact', formData);
-      
+      await axios.post("/api/contact", formData);
+
       setSubmitted(true);
       setFormData({
-        firstName: '',
-        lastName: '',
-        email: '',
-        phone: '',
-        package: 'Growth - ₹3,499/month',
-        message: ''
+        firstName: "",
+        lastName: "",
+        email: "",
+        phone: "",
+        package: "Growth - ₹3,499/month",
+        message: "",
       });
     } catch (error: any) {
-      console.error('Contact form error:', error);
-      alert(error.response?.data?.message || 'Failed to submit form. Please try again.');
+      console.error("Contact form error:", error);
+      alert(
+        error.response?.data?.message ||
+          "Failed to submit form. Please try again."
+      );
     } finally {
       setIsSubmitting(false);
     }
@@ -56,15 +63,20 @@ const Contact: React.FC = () => {
             Ready to Grow Your Brand?
           </h2>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            Let's discuss how we can transform your social media presence and drive real results for your business
+            Let's discuss how we can transform your social media presence and
+            drive real results for your business
           </p>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
           <div>
-            <h3 className="text-2xl font-bold text-gray-900 mb-8">Get in Touch</h3>
+            <h3 className="text-2xl font-bold text-gray-900 mb-8">
+              Get in Touch
+            </h3>
             <p className="text-gray-600 mb-8">
-              Ready to take your social media to the next level? Contact us today for a free consultation and let's discuss which package is perfect for your business goals.
+              Ready to take your social media to the next level? Contact us
+              today for a free consultation and let's discuss which package is
+              perfect for your business goals.
             </p>
 
             <div className="space-y-6">
@@ -74,7 +86,12 @@ const Contact: React.FC = () => {
                 </div>
                 <div>
                   <p className="font-semibold text-gray-900">Phone</p>
-                  <p className="text-purple-600">+91 7887265878</p>
+                  <a
+                    href="tel:+917887265878"
+                    className="text-purple-600 hover:underline"
+                  >
+                    +91 7887265878
+                  </a>
                 </div>
               </div>
 
@@ -84,7 +101,12 @@ const Contact: React.FC = () => {
                 </div>
                 <div>
                   <p className="font-semibold text-gray-900">Email</p>
-                  <p className="text-purple-600">VishalGupta321@gmail.com</p>
+                  <a
+                    href="mailto:VishalGupta321@gmail.com"
+                    className="text-purple-600 hover:underline"
+                  >
+                    VishalGupta321@gmail.com
+                  </a>
                 </div>
               </div>
 
@@ -94,7 +116,9 @@ const Contact: React.FC = () => {
                 </div>
                 <div>
                   <p className="font-semibold text-gray-900">Response Time</p>
-                  <p className="text-gray-600">Within 2 hours during business hours</p>
+                  <p className="text-gray-600">
+                    Within 2 hours during business hours
+                  </p>
                 </div>
               </div>
             </div>
@@ -112,19 +136,27 @@ const Contact: React.FC = () => {
           </div>
 
           <div className="bg-gray-50 rounded-2xl p-8">
-            <h3 className="text-2xl font-bold text-gray-900 mb-2">📧 Send us a Message</h3>
-            <p className="text-gray-600 mb-8">Fill out the form below and we'll get back to you within 24 hours</p>
+            <h3 className="text-2xl font-bold text-gray-900 mb-2">
+              📧 Send us a Message
+            </h3>
+            <p className="text-gray-600 mb-8">
+              Fill out the form below and we'll get back to you within 24 hours
+            </p>
 
             {submitted && (
               <div className="mb-6 p-4 bg-green-100 border border-green-200 rounded-lg">
-                <p className="text-green-800 font-semibold">Message sent successfully! We'll get back to you soon.</p>
+                <p className="text-green-800 font-semibold">
+                  Message sent successfully! We'll get back to you soon.
+                </p>
               </div>
             )}
 
             <form onSubmit={handleSubmit} className="space-y-6">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">First Name</label>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    First Name
+                  </label>
                   <input
                     type="text"
                     name="firstName"
@@ -136,7 +168,9 @@ const Contact: React.FC = () => {
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Last Name</label>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Last Name
+                  </label>
                   <input
                     type="text"
                     name="lastName"
@@ -150,7 +184,9 @@ const Contact: React.FC = () => {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Email</label>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Email
+                </label>
                 <input
                   type="email"
                   name="email"
@@ -163,7 +199,9 @@ const Contact: React.FC = () => {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Phone Number</label>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Phone Number
+                </label>
                 <input
                   type="tel"
                   name="phone"
@@ -176,7 +214,9 @@ const Contact: React.FC = () => {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Interested Package</label>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Interested Package
+                </label>
                 <select
                   name="package"
                   value={formData.package}
@@ -190,7 +230,9 @@ const Contact: React.FC = () => {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Message</label>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Message
+                </label>
                 <textarea
                   name="message"
                   value={formData.message}
@@ -208,7 +250,7 @@ const Contact: React.FC = () => {
                 className="w-full bg-gradient-to-r from-purple-600 to-pink-600 text-white py-4 px-6 rounded-lg font-semibold hover:from-purple-700 hover:to-pink-700 transition-colors flex items-center justify-center disabled:opacity-50"
               >
                 {isSubmitting ? (
-                  'Sending...'
+                  "Sending..."
                 ) : (
                   <>
                     <Send className="mr-2" size={20} />

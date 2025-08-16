@@ -11,7 +11,7 @@ const Footer: React.FC = () => {
             <p className="text-gray-400 mb-6 max-w-md">
               Professional Social Media Management Services that help your brand grow, engage, and succeed in the digital landscape.
             </p>
-            <div className="flex space-x-4">
+            {/* <div className="flex space-x-4">
               <a href="#" className="bg-gray-800 p-2 rounded-lg hover:bg-purple-600 transition-colors">
                 <Instagram size={20} />
               </a>
@@ -24,7 +24,7 @@ const Footer: React.FC = () => {
               <a href="#" className="bg-gray-800 p-2 rounded-lg hover:bg-purple-600 transition-colors">
                 <Linkedin size={20} />
               </a>
-            </div>
+            </div> */}
           </div>
 
           <div>
