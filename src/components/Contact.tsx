@@ -124,14 +124,23 @@ const Contact: React.FC = () => {
             </div>
 
             <div className="mt-8 flex space-x-4">
-              <button className="flex-1 bg-purple-600 text-white py-3 px-6 rounded-lg font-semibold hover:bg-purple-700 transition-colors flex items-center justify-center">
+              {/* Call Now button */}
+              <a
+                href="tel:+917887265878"
+                className="flex-1 bg-purple-600 text-white py-3 px-6 rounded-lg font-semibold hover:bg-purple-700 transition-colors flex items-center justify-center"
+              >
                 <Phone className="mr-2" size={20} />
                 Call Now
-              </button>
-              <button className="flex-1 bg-pink-600 text-white py-3 px-6 rounded-lg font-semibold hover:bg-pink-700 transition-colors flex items-center justify-center">
+              </a>
+
+              {/* Send Email button */}
+              <a
+                href="mailto:VishalGupta321@gmail.com"
+                className="flex-1 bg-pink-600 text-white py-3 px-6 rounded-lg font-semibold hover:bg-pink-700 transition-colors flex items-center justify-center"
+              >
                 <Mail className="mr-2" size={20} />
                 Send Email
-              </button>
+              </a>
             </div>
           </div>
 
