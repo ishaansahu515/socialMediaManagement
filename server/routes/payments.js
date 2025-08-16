@@ -25,11 +25,11 @@ const packages = {
 };
 
 // Create order
-router.post("/create-order", auth, async (req, res) => {
+router.post("/create-order",  async (req, res) => {
   try {
-    const { planType } = req.body;
-    const userId = req.body.user._id;
-    console.log("User:", req.body.user);
+    const { planType, userId } = req.body;
+   
+    console.log("UserId:", userId);
     if (!packages[planType]) {
       return res.status(400).json({ message: "Invalid plan type" });
     }

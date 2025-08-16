@@ -45,7 +45,7 @@ router.post("/register", async (req, res) => {
 
     // Generate token
     const token = generateToken(user._id);
-
+    localStorage.setItem("social-user", JSON.stringify(user));
     // Set HTTP-only cookie
     res.cookie("token", token, {
       httpOnly: true,
@@ -97,6 +97,7 @@ router.post("/login", async (req, res) => {
     // Generate token
     const token = generateToken(user._id);
 
+    localStorage.setItem("social-user", JSON.stringify(user));
     // Set HTTP-only cookie
     res.cookie("token", token, {
       httpOnly: true,
